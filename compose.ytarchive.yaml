@@ -1,0 +1,17 @@
+# Usage:
+#   mkdir -m 777 -p ./keeby
+#   cd keeby
+#   ...copy this compose file...
+#   docker compose up -d
+
+services:
+  ytarchive:
+    container_name: ytarchive
+    image: ghcr.io/jim60105/ytarchive:latest
+    volumes:
+      - .:/download
+    restart: always
+    command: -r 15 https://www.youtube.com/@keeby_boy/streams best
+    logging:
+      options:
+        max-size: 1g

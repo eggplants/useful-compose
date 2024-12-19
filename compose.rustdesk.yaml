@@ -1,0 +1,31 @@
+# Usage:
+#
+# 0. Server A and clients B/C are on the same Tailnet
+# 1. Start RustDesk Server on A in Docker
+# 2. Install RustDesk Client on B/C and set Magic DNS of A and Server Password Key
+# 3. B/C can be connected to each other
+services:
+  hbbs:
+    container_name: hbbs
+    ports:
+      - 21115:21115
+      - 21116:21116
+      - 21116:21116/udp
+      - 21118:21118
+    image: rustdesk/rustdesk-server:latest
+    command: hbbs -k password
+    volumes:
+      - ./data:/root
+    network_mode: host
+    restart: unless-stopped
+    # depends_on:
+    #   - hbbr
+
+  # hbbr:
+  #   container_name: hbbr
+  #   image: rustdesk/rustdesk-server:latest
+  #   command: hbbr
+  #   volumes:
+  #     - ./data:/root
+  #   network_mode: host
+  #   restart: unless-stopped
